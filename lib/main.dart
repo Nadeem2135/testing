@@ -1,79 +1,44 @@
 import 'package:flutter/material.dart';
 
+import 'Sign_In.dart';
+import 'Sign_Up.dart';
+
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        primaryColor: const Color(0xFFFF6600),
+        scaffoldBackgroundColor: const Color(0xFFF5F6F8),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const AuthTogglePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-
-  final String title;
+class AuthTogglePage extends StatefulWidget {
+  const AuthTogglePage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<AuthTogglePage> createState() => _AuthTogglePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-
-      _counter++;
-    });
-  }
+class _AuthTogglePageState extends State<AuthTogglePage> {
+  bool showSignIn = true;
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        centerTitle: true,
-        automaticallyImplyActions: false,
-        title: Text(widget.title),
-      ),
-      body: Center(
-
-        child: Column(
-
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      body: showSignIn
+          ? SignInScreen(onToggle: () => setState(() => showSignIn = false))
+          : SignUpScreen(onToggle: () => setState(() => showSignIn = true)),
     );
   }
 }
-
-
-
